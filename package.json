@@ -1,0 +1,12 @@
+{
+  "name": "my-cv",
+  "version": "1.0.0",
+  "main": "main.js", 
+  "scripts": {
+    "start": "node scripts.js" 
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
