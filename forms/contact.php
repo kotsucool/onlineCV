@@ -7,7 +7,7 @@
   */
 
   // Replace contact@example.com with your real receiving email address
-  $receiving_email_address = 'contact@example.com';
+  $receiving_email_address = 'eyezkaniknanw@gmail.com';
 
   if( file_exists($php_email_form = '../assets/vendor/php-email-form/php-email-form.php' )) {
     include( $php_email_form );
@@ -38,4 +38,23 @@
   $contact->add_message( $_POST['message'], 'Message', 10);
 
   echo $contact->send();
+
+  if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // รับค่าจากฟอร์ม
+    $to = 'your_email@example.com'; // อีเมลที่คุณต้องการรับ
+    $email_subject = $_POST['subject'];
+    $body = "From: " . $_POST['name'] . "\nEmail: " . $_POST['email'] . "\nMessage: " . $_POST['message'];
+    $headers = "From: " . $_POST['email'];
+
+    // ส่งอีเมล
+    if (mail($to, $email_subject, $body, $headers)) {
+        echo "Message sent successfully.";
+    } else {
+        echo "Failed to send message.";
+    }
+} else {
+    // ถ้าไม่ได้ส่งข้อมูลมาจากฟอร์ม
+    echo "Invalid request.";
+}
+
 ?>
