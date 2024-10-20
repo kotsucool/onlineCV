@@ -81,20 +81,20 @@ a:hover {
 }
 
 /* Snow */
-/* สไตล์พื้นฐานสำหรับหิมะ */
 .snowflake {
-  position: absolute;
-  top: -10px; /* เริ่มจากด้านบน */
+  position: fixed; /* ใช้ fixed แทน absolute เพื่อให้หิมะอยู่ในตำแหน่งคงที่ */
+  top: -10px; /* เริ่มต้นจากด้านบน */
   opacity: 0.8; /* ความโปร่งแสง */
-  animation: fall linear forwards; /* การอนิเมชัน */
+  pointer-events: none; /* ไม่ให้มีการโต้ตอบ */
+  z-index: 9999; /* ทำให้หิมะอยู่ข้างหน้า */
+  animation: fall linear forwards; /* ใช้อนิเมชันตก */
 }
 
 @keyframes fall {
   to {
-      transform: translateY(100vh); /* ทำให้หิมะตกลงจนถึงด้านล่าง */
+      transform: translateY(100vh); /* หิมะตกจนถึงด้านล่าง */
   }
 }
-
 
 
 /* Button */
