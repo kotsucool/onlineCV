@@ -1,3 +1,14 @@
+const express = require('express');
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+app.use(express.static('public')); // ถ้ามีโฟลเดอร์ public สำหรับไฟล์ static
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
+
+
 let snowInterval;
 let progressBarAnimated = false;
 
