@@ -7,23 +7,23 @@ function createSnowflake() {
     snowflake.className = 'snowflake';
     snowflake.textContent = '❄';
 
-    const colors = ['#ffffff', '#a6e7ff', '#ff99cc'];
+    const colors = ['#ffffff', '#a6e7ff', '#ff99cc']; // สุ่มสีหิมะ
     snowflake.style.color = colors[Math.floor(Math.random() * colors.length)];
     snowflake.style.left = Math.random() * window.innerWidth + 'px';
-    snowflake.style.fontSize = (Math.random() * 10 + 10) + 'px';
-    snowflake.style.animationDuration = (Math.random() * 3 + 2) + 's';
+    snowflake.style.fontSize = (Math.random() * 10 + 10) + 'px'; // ขนาดหิมะ
+    snowflake.style.animationDuration = (Math.random() * 3 + 2) + 's'; // ความเร็วในการตก
 
     snowflake.addEventListener('animationend', () => {
-        snowflake.remove();
+        snowflake.remove(); // ลบหิมะเมื่อจบการตก
     });
 
-    document.body.appendChild(snowflake);
+    document.body.appendChild(snowflake); // เพิ่มหิมะไปที่ body
 }
 
 // ฟังก์ชันสำหรับเริ่มตกหิมะ
 function startSnow() {
     if (!snowInterval) {
-        snowInterval = setInterval(createSnowflake, 200);
+        snowInterval = setInterval(createSnowflake, 200); // ทุก 200 มิลลิวินาที
     }
 }
 
@@ -39,85 +39,33 @@ function playBackgroundMusic() {
     if (audio) {
         if (audio.paused) {
             audio.play().then(() => {
-                console.log('Music is playing!');
+                console.log('Music is playing!'); // แจ้งเมื่อเพลงเริ่มเล่น
             }).catch(error => {
-                console.error('Failed to play the audio:', error);
+                console.error('Failed to play the audio:', error); // แจ้งหากไม่สามารถเล่นเพลง
             });
         } else {
-            console.log('Music is already playing.');
+            console.log('Music is already playing.'); // แจ้งเมื่อเพลงกำลังเล่นอยู่
         }
-    } else {
-        console.error('Audio element not found.');
     }
-}
-
-// ฟังก์ชันสำหรับอนิเมชันแถบสกิล
-function animateProgressBars() {
-    const progressBars = document.querySelectorAll('.progress-bar');
-    progressBars.forEach(progressBar => {
-        const value = progressBar.getAttribute('aria-valuenow');
-        progressBar.style.width = '0'; // รีเซ็ตความกว้างเป็น 0
-        setTimeout(() => {
-            progressBar.style.width = value + '%';
-            progressBar.style.transition = 'width 2s ease-in-out'; // เริ่มอนิเมชัน
-        }, 10);
-    });
 }
 
 // เริ่มทำงานเมื่อโหลดหน้า
 document.addEventListener('DOMContentLoaded', () => {
-    // เริ่มตกหิมะทันที
-    startSnow();
+    startSnow(); // เริ่มตกหิมะทันที
 
     const playButton = document.getElementById('playButton');
     if (playButton) {
         playButton.addEventListener('click', () => {
-            playBackgroundMusic();
+            playBackgroundMusic(); // เล่นเพลงเมื่อกดปุ่ม
         });
-    } else {
-        console.error('Play button not found.');
     }
 
-    const skillsSection = document.getElementById("skills");
-    if (skillsSection) {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    animateProgressBars(); // เริ่มอนิเมชันทุกครั้งที่เข้า Skills section
-                }
-            });
-        });
-
-        observer.observe(skillsSection);
-
-        // เริ่มอนิเมชันเมื่อโหลดหน้า
-        window.addEventListener('load', () => {
-            if (skillsSection.getBoundingClientRect().top >= 0 && skillsSection.getBoundingClientRect().bottom <= window.innerHeight) {
-                animateProgressBars();
-            }
-        });
-    } else {
-        console.error('Skills section not found.');
-    }
-
-    // ฟังก์ชันสำหรับตรวจสอบการเลื่อนหน้า
-    function checkScroll() {
-        const playButtonBackground = document.querySelector('.play-button-background');
-        if (window.scrollY > 0) {
-            playButtonBackground.style.display = 'none';
+    // ตรวจสอบการเปลี่ยนสถานะแท็บ
+    document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') {
+            startSnow(); // เริ่มตกหิมะเมื่อกลับมา
         } else {
-            playButtonBackground.style.display = 'block';
+            stopSnow(); // หยุดตกหิมะเมื่อออกจากแท็บ
         }
-    }
-
-    window.addEventListener('scroll', checkScroll);
-});
-
-// ตรวจสอบเมื่อเปลี่ยนแท็บ
-document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'visible') {
-        startSnow(); // เริ่มตกหิมะใหม่เมื่อกลับมา
-    } else {
-        stopSnow(); // หยุดตกหิมะเมื่อออกจากแท็บ
-    }
+    });
 });
