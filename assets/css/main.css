@@ -744,7 +744,7 @@ section,
   border-radius: 20px; /* ปรับให้มีขอบมน */
   transition: width 0.9s ease-in-out; /* เปลี่ยนความกว้างด้วยการทำให้เกิดอนิเมชัน */
   background-color: var(--accent-color);
-  background: linear-gradient(90deg, #67b1d8, #a1c7da); 
+  background: linear-gradient(90deg, #67b1d8, #dad5a1); 
 }
 
 .skills .progress-bar.loaded {
